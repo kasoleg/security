@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<definition name="common" template="/WEB-INF/templates/common.jsp">
+		<put-attribute name="title" value=""></put-attribute>
+		<put-attribute name="header" value="/WEB-INF/templates/common/header.jsp"></put-attribute>
+		<put-attribute name="menu" value="/WEB-INF/templates/common/menu.jsp"></put-attribute>
+		<put-attribute name="body" value=""></put-attribute>
+		<put-attribute name="footer" value="/WEB-INF/templates/common/footer.jsp"></put-attribute>
+	</definition>
+	<definition name="index" extends="common">
+		<put-attribute name="title" value="Shop"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/index.jsp"></put-attribute>
+	</definition>
+	<definition name="login" extends="common">
+		<put-attribute name="title" value="Login/Register"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/login.jsp"></put-attribute>
+	</definition>
+	<definition name="admin" extends="common">
+		<put-attribute name="title" value="Products"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/admin.jsp"></put-attribute>
+	</definition>
+	<definition name="adminProducts" extends="common">
+		<put-attribute name="title" value="Products"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/adminProducts.jsp"></put-attribute>
+	</definition>
+	<definition name="editProduct" extends="common">
+		<put-attribute name="title" value="Edit Product"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/editProduct.jsp"></put-attribute>
+	</definition>
+	<definition name="editMenuLinks" extends="common">
+		<put-attribute name="title" value="Edit Menu Links"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/editMenuLinks.jsp"></put-attribute>
+	</definition>
+	<definition name="products" extends="common">
+		<put-attribute name="title" value="Electronics - All Products"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/products.jsp"></put-attribute>
+	</definition>
+	<definition name="product" extends="common">
+		<put-attribute name="title" value=""></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/product.jsp"></put-attribute>
+	</definition>
+	<definition name="cart" extends="common">
+		<put-attribute name="title" value="Shoopping Cart"></put-attribute>
+		<put-attribute name="body" value="/WEB-INF/views/cart.jsp"></put-attribute>
+	</definition>
+</tiles-definitions>
