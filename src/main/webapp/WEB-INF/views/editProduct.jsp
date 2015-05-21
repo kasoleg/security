@@ -12,14 +12,29 @@
 				<td><f:errors path="name" cssClass="errors"></f:errors></td>
 			</tr>
 			<tr>
+				<td>Image</td>
+				<td><f:input path="subCategory" /></td>
+				<td><f:errors path="subCategory" cssClass="errors"></f:errors></td>
+			</tr>
+			<tr>
 				<td>Price</td>
 				<td><f:input path="price" /></td>
 				<td><f:errors path="price" cssClass="errors"></f:errors></td>
 			</tr>
 			<tr>
+				<td>Final Price</td>
+				<td><f:input path="final_price" /></td>
+				<td><f:errors path="final_price" cssClass="errors"></f:errors></td>
+			</tr>
+			<tr>
 				<td>Count</td>
 				<td><f:input path="count" /></td>
 				<td><f:errors path="count" cssClass="errors"></f:errors></td>
+			</tr>
+			<tr>
+				<td>Image</td>
+				<td><f:input path="product_img" /></td>
+				<td><f:errors path="product_img" cssClass="errors"></f:errors></td>
 			</tr>
 			<tr>
 				<td>Description</td>

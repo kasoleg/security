@@ -86,18 +86,21 @@ public class IProductImpl implements IProduct {
 	}
 
 	@Override
-	public ArrayList<ArrayList<ArrayList<String>>> listMenuLinks() {
-		ArrayList<ArrayList<ArrayList<String>>> links = new ArrayList<ArrayList<ArrayList<String>>>();
+	public ArrayList<ArrayList<List<String>>> listMenuLinks() {
+		ArrayList<ArrayList<List<String>>> links = new ArrayList<ArrayList<List<String>>>();
 		List<String> categories = listCategories();
 		BasicDBObject dbObject = new BasicDBObject(); 
 		
 		for (String category : categories) {
 			Menu menu = mongoOperations.findOne(Query.query(Criteria.where("category").is(category)), Menu.class);
 			dbObject.append("details.Category", category);
-			ArrayList<ArrayList<String>> menuLinks = new ArrayList<ArrayList<String>>();
+			ArrayList<List<String>> menuLinks = new ArrayList<List<String>>();
 			for (String menuLink : menu.getLinks()) {
-				ArrayList<String> details = (ArrayList) mongoOperations.getCollection("products").distinct("details."+menuLink, dbObject);
-				menuLinks.add(details);
+				List<String> details = (ArrayList) mongoOperations.getCollection("products").distinct("details."+menuLink, dbObject);
+				if (details.size() > 5)
+					menuLinks.add(details.subList(0, 5));
+				else
+					menuLinks.add(details);
 			}
 			links.add(menuLinks);
 		}
@@ -184,20 +187,16 @@ public class IProductImpl implements IProduct {
 
 	@Override
 	public List<Product> search(String category, String name, String sort) {
-		Query query = null;
-		
+		Query query = new Query();
 		if (name != null) {
-			TextCriteria criteria = TextCriteria.forDefaultLanguage()
-					  .matchingAny("name", name);
-	
-					query = TextQuery.queryText(criteria);
-					query.addCriteria(Criteria.where("details.Category").is(category));
-					
-		} else {
-			query = new Query(Criteria.where("details.Category").is(category));
+			TextCriteria criteria = TextCriteria.forDefaultLanguage().matchingAny("name", name);
+			query.addCriteria(criteria);
 		}
+			
 		Sort asc = new Sort(Sort.Direction.ASC, "final_price");
 		Sort desc = new Sort(Sort.Direction.DESC, "final_price");
+		if (!category.equals("All stores"))
+			query.addCriteria(Criteria.where("details.Category").is(category));
 		if (sort.equals("asc")) {
 			query.with(asc);
 		} else if (sort.equals("desc")) {

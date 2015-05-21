@@ -38,6 +38,10 @@ public class ProductsController {
 	public String search(@PathVariable String category, @RequestParam(value="query", required=false) String query, @RequestParam(value="sort", required=false) String sort, Model model) {
 		if (sort == null)
 			sort = "relevance";
+		if (sort.equals("asc"))
+			model.addAttribute("active", "asc");
+		else if (sort.equals("desc"))
+			model.addAttribute("active", "desc");
 		model.addAttribute("categories", product.listCategories());
 		model.addAttribute("accessories", product.listAccessoriesByCategory());
 		model.addAttribute("menuLinks", product.listMenuLinks());

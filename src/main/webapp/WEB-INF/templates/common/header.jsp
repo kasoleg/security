@@ -27,14 +27,24 @@
 			</a>
 		</div>
 		<div class="search">
-			<form name=search action="Mobiles/search" method="get">
+			<c:if test="${empty currentCategory}">
+				<form id="search" name=search action="<%=request.getContextPath()%>/All stores/search" method="get">
+			</c:if>
+			<c:if test="${not empty currentCategory}">
+				<form id="search" name=search action="<%=request.getContextPath()%>/${currentCategory}/search" method="get">
+			</c:if>
 				<div class="search-bar">
 					<div id="inner-search">
 						<input name="query" type="text" class="input-search" placeholder="Search from millions of products" />
 						<select id="select">
 							<option value="All" selected="selected">All Stores</option>
 							<c:forEach items="${categories}" var="category">
-								<option value="${category}">${category}</option>
+								<c:if test="${category == currentCategory}">
+									<option value="${category}" selected="selected">${category}</option>
+								</c:if>
+								<c:if test="${category != currentCategory}">
+									<option value="${category}">${category}</option>
+								</c:if>
 							</c:forEach>
 						</select>
 					</div>

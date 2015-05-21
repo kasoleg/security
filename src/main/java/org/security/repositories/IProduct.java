@@ -18,7 +18,7 @@ public interface IProduct {
 	List<String> listCategories();
 	List<Product> listProductsByCategory(String category);
 	Menu menuLinksByCategory(String category);
-	ArrayList<ArrayList<ArrayList<String>>> listMenuLinks();
+	ArrayList<ArrayList<List<String>>> listMenuLinks();
 	ArrayList<List<String>> listAccessoriesByCategory();
 	List<String> listAccessories();
 	List<Menu> listNameLinks();

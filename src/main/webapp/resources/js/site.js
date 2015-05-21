@@ -586,3 +586,12 @@ $(document).ready(function() {
 		controls.before("<tr class='count'><td><input class='menu' id='links"+is+"' name='links["+is+"]' type='text'></td><td><input type='button' class='delMenuLink' onclick='delMenuLink(this)' value='Delete attribute'></td>");
 	});
 });
+
+$(document).ready(function() {
+	var select = $("#select");
+	var search = $("#search");
+	select.change(function() {
+		var selected = $("#select option:selected").text();
+		search.attr("action", "/mongo/"+selected+"/search");
+	});
+});

@@ -91,18 +91,48 @@
 							</ul>
 							<ul class="nav nav-tabs">
 								<span>Sort By</span>
-								<li class="active" onclick="activeLi(this)">
-									<input name="sort" value="relevance" type="radio" checked="" style="display:none">
-									<a href="<%=request.getContextPath()%>/${currentCategory}/search?sort=relevance">Best Match</a>
-								</li>
-								<li onclick="activeLi(this)">
-									<input name="sort" value="asc" type="radio" style="display:none">
-									<a href="<%=request.getContextPath()%>/${currentCategory}/search?sort=asc">Low Price</a>
-								</li>
-								<li onclick="activeLi(this)">
-									<input name="sort" value="desc" type="radio" style="display:none">
-									<a href="<%=request.getContextPath()%>/${currentCategory}/search?sort=desc">High Price</a>
-								</li>
+								<c:if test="${active == 'asc'}">
+									<li onclick="activeLi(this)">
+										<input name="sort" value="relevance" type="radio" checked="" style="display:none">
+										<a href="<%=request.getContextPath()%>/${currentCategory}/search?sort=relevance">Best Match</a>
+									</li>
+									<li class="active" onclick="activeLi(this)">
+										<input name="sort" value="asc" type="radio" style="display:none">
+										<a href="#sort=asc">Low Price</a>
+									</li>
+									<li onclick="activeLi(this)">
+										<input name="sort" value="desc" type="radio" style="display:none">
+										<a href="<%=request.getContextPath()%>/${currentCategory}/search?sort=desc">High Price</a>
+									</li>
+								</c:if>
+								<c:if test="${active == 'desc'}">
+									<li onclick="activeLi(this)">
+										<input name="sort" value="relevance" type="radio" checked="" style="display:none">
+										<a href="<%=request.getContextPath()%>/${currentCategory}/search?sort=relevance">Best Match</a>
+									</li>
+									<li onclick="activeLi(this)">
+										<input name="sort" value="asc" type="radio" style="display:none">
+										<a href="<%=request.getContextPath()%>/${currentCategory}/search?sort=asc">Low Price</a>
+									</li>
+									<li class="active" onclick="activeLi(this)">
+										<input name="sort" value="desc" type="radio" style="display:none">
+										<a href="#sort=desc">High Price</a>
+									</li>
+								</c:if>
+								<c:if test="${empty active}">
+									<li class="active" onclick="activeLi(this)">
+										<input name="sort" value="relevance" type="radio" checked="" style="display:none">
+										<a href="<%=request.getContextPath()%>/${currentCategory}/search?sort=relevance">Best Match</a>
+									</li>
+									<li onclick="activeLi(this)">
+										<input name="sort" value="asc" type="radio" style="display:none">
+										<a href="#&sort=asc">Low Price</a>
+									</li>
+									<li onclick="activeLi(this)">
+										<input name="sort" value="desc" type="radio" style="display:none">
+										<a href="<%=request.getContextPath()%>/${currentCategory}/search?sort=desc">High Price</a>
+									</li>
+								</c:if>
 							</ul>
 						</div>
 					</form>
