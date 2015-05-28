@@ -107,9 +107,7 @@
 										<h4 class="panel-title">
 											<a class="accordion-toggle">
 												<div class="customPanelTitle row" id="divConfirmationPanelTitle">
-													<div>
-														
-													</div>
+													
 												</div>
 											</a>
 										</h4>
