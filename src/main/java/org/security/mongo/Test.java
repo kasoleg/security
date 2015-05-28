@@ -29,7 +29,7 @@ public class Test implements AuthenticationSuccessHandler {
 	    	   UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 				String email = userDetails.getUsername();
 				User user = this.user.findByEmail(email);
-				Cookie cookie = new Cookie("cust_name", user.getName().toUpperCase());
+				Cookie cookie = new Cookie("cust_name", user.getName());
 				response.addCookie(cookie);
 				String redir = request.getParameter("redirectURL");
 				response.sendRedirect("/mongo");

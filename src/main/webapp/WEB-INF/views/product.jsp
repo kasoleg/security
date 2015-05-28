@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="f" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,40 +11,17 @@
 <body>
 	<div id="submenu">
 		<span class="active">
-			<a href="#">Mobiles</a>
+			<a href="<%=request.getContextPath()%>/${category}">${category}</a>
 		</span>
 		<span class=fishbone-arrow></span>
 		<span class="active-options">		
 			&nbsp;
-			<a href="#">Samsung Galaxy</a>
-			&nbsp;
-			&nbsp;
-			&nbsp;
-			<a href="#">Micromax Canvas</a>
-			&nbsp;
-			&nbsp;
-			&nbsp;
-			<a href="#">Sony Xperia</a>
-			&nbsp;
-			&nbsp;
-			&nbsp;
-			<a href="#">Latest Mobiles</a>
-			&nbsp;
-			&nbsp;
-			&nbsp;
-			<a href="#">Mobile Offers</a>
-			&nbsp;
-			&nbsp;
-			&nbsp;
-			<a href="#">Upcoming</a>
-			&nbsp;
-			&nbsp;
-			&nbsp;
-			<a href="#">Best Selling</a>
-			&nbsp;
-			&nbsp;
-			&nbsp;
-			<a href="#">Budget Mobiles</a>
+			<c:forEach items="${series}" var="serie">
+				<a href="<%=request.getContextPath()%>/${category}?Series=${serie}">${serie}</a>
+				&nbsp;
+				&nbsp;
+				&nbsp;
+			</c:forEach>
 			&nbsp;
 		</span>
 	</div>
@@ -50,85 +29,40 @@
 		<div class="container">
 			<div id="product-overview" class="row">
 				<div class="breadcrumb-sdp">
-					<a href="#">
-						<span>Electronics</span>
+					<a href="<%=request.getContextPath()%>/${category}">
+						<span>${category}</span>
 					</a>
 					>
-					<a href="#">
-						<span>Mobiles & Tablets</span>
-					</a>
-					>
-					<a href="#">
-						<span>Mobiles</span>
-					</a>
-					>
-					<a href="#">
-						<span>Android Mobiles Phones</span>
-					</a>
-					>
-					<span class="active">Samsung Galaxy S6</span>
+					<span class="active">${product.name}</span>
 				</div>
 				<div id="container_sdp" class="row">
 					<div id="prod_img" class="top-margin">
 						<div id="ib_img_viewer">
 							<div class="slick-slider animated fadeIn">
-								<div>
-									<img class="img-responsive" src="http://catman-a2.infibeam.com/img/mobi/8841726/c0/7f/samsungsmg920izka400x400.jpg.96c07ff8e8.999x320x320.jpg" alt="Samsung Galaxy S6" >
-								</div>
-								<div>
-									<img class="img-responsive"  src="http://catman-a2.infibeam.com/img/mobi/8841726/09/37/samsungsmg920izka400x4005.jpg.3a09373a05.999x320x320.jpg" >
-								</div>
-								<div>
-									<img class="img-responsive"  src="http://catman-a2.infibeam.com/img/mobi/8841726/41/1d/samsungsmg920izka400x4002.jpg.d1411dce6f.999x320x320.jpg" >
-								</div>
-								<div>
-									<img class="img-responsive" src="http://catman-a2.infibeam.com/img/mobi/8841726/0b/f0/samsungsmg920izka400x4006.jpg.160bf09026.999x320x320.jpg" alt="Samsung Galaxy S6" >
-								</div>
-								<div>
-									<img class="img-responsive"  src="http://catman-a2.infibeam.com/img/mobi/8841726/77/12/commonsmg920f001frontwhite.jpeg.057712a60b.999x320x320.jpg" >
-								</div>
-								<div>
-									<img class="img-responsive"  src="http://catman-a2.infibeam.com/img/mobi/8841726/e2/a0/commonsmg920f005lfront30white.jpeg.a7e2a0cff3.999x320x320.jpg" >
-								</div>
-								<div>
-									<img class="img-responsive" src="http://catman-a2.infibeam.com/img/mobi/8841726/47/2f/commonsmg920f002backwhite.jpeg.9b472f6b7e.999x320x320.jpg" alt="Samsung Galaxy S6" >
-								</div>
-								<div>
-									<img class="img-responsive"  src="http://catman-a2.infibeam.com/img/mobi/8841726/5f/85/commonsmg920f003lsidewhite.jpeg.745f8587db.999x320x320.jpg" >
-								</div>
+								<c:forEach items="${product.images}" var="image">
+									<div>
+										<img class="img-responsive" src="${image}">
+									</div>
+								</c:forEach>
 							</div>
 							<div id="ib_img_thumb">
+								<c:forEach items="${product.thumbnails}" var="thumbnail" varStatus="i">
 									<div>
-										<img class="thumbs selectedThumb" src="http://catman-a2.infibeam.com/img/mobi/8841726/c0/7f/samsungsmg920izka400x400.jpg.96c07ff8e8.999x45x45.jpg">
+										<c:if test="${i.index == 0}">
+											<img class="thumbs selectedThumb" src="${thumbnail}">
+										</c:if>
+										<c:if test="${i.index != 0}">
+											<img class="thumbs" src="${thumbnail}">
+										</c:if>
 									</div>
-									<div>
-										<img class="thumbs" src="http://catman-a2.infibeam.com/img/mobi/8841726/09/37/samsungsmg920izka400x4005.jpg.3a09373a05.999x45x45.jpg">
-									</div>
-									<div>
-										<img class="thumbs" src="http://catman-a2.infibeam.com/img/mobi/8841726/41/1d/samsungsmg920izka400x4002.jpg.d1411dce6f.999x45x45.jpg">
-									</div>
-									<div>
-										<img class="thumbs" src="http://catman-a2.infibeam.com/img/mobi/8841726/0b/f0/samsungsmg920izka400x4006.jpg.160bf09026.999x45x45.jpg">
-									</div>
-									<div>
-										<img class="thumbs" src="http://catman-a2.infibeam.com/img/mobi/8841726/77/12/commonsmg920f001frontwhite.jpeg.057712a60b.999x45x45.jpg">
-									</div>
-									<div>
-										<img class="thumbs" src="http://catman-a2.infibeam.com/img/mobi/8841726/e2/a0/commonsmg920f005lfront30white.jpeg.a7e2a0cff3.999x45x45.jpg">
-									</div>
-									<div>
-										<img class="thumbs" src="http://catman-a2.infibeam.com/img/mobi/8841726/47/2f/commonsmg920f002backwhite.jpeg.9b472f6b7e.999x45x45.jpg">
-									</div>
-									<div>
-										<img class="thumbs" src="http://catman-a2.infibeam.com/img/mobi/8841726/5f/85/commonsmg920f003lsidewhite.jpeg.745f8587db.999x45x45.jpg">
-									</div>
+								</c:forEach>
 							</div>
 							
 						</div>
 					</div>
 					<div class="padding-left">
 						<div id="title">
-							<h1 class="product-title-big">Samsung Galaxy S6 (White) (32GB)</h1>
+							<h1 class="product-title-big">${product.name}</h1>
 						</div>
 						<div id="rwc-wrapper">
 							<div id="product-reviews-summary">
@@ -144,7 +78,7 @@
 										(1)
 										<span class="rating-gap right-margin"></span>
 									</span>
-									<a class="review-count right-margin" href="#">3<span class="review-gap"> Reviews</span></a>
+									<a class="review-count right-margin" href="#">${product.comment_count}<span class="review-gap"> Reviews</span></a>
 									<span id="write-review" class="right-margin">
 										<img src="<%=request.getContextPath()%>/resources/common/img/product/write.png">
 										<a class="write-reviews">Write-Review</a>
@@ -168,18 +102,18 @@
 												<div class="row">
 													<div id="base-price" class="linethrough">
 														<span>R</span>
-														<span class="price">56,700</span>
+														<span class="price">${product.price}</span>
 													</div>
 												</div>
 												<div class="row">
 													<div id="price-after-discount">
 														<span>R</span>
-														<span class="price">49,900</span>
+														<span class="price">${product.final_price}</span>
 													</div>
 													<div id="discounted-price">
 														[
 														<span>R</span>
-														<span class="price">6,800</span>
+														<span class="price">${product.price - product.final_price}</span>
 														Off
 														]
 													</div>
@@ -189,26 +123,19 @@
 									</div>
 									<div class="overview-gola-wrapper clearfix">
 										<div id="product_overview">
-											<div class="status">In Stock</div>
+											<c:if test="${product.count > 0}">
+												<div class="status">In Stock</div>
+											</c:if>
+											<c:if test="${product.count == 0}">
+												<div class="status  soldout">Out of Stock.</div>
+											</c:if>
 										</div>
 									</div>
 								</div>
 								<div id="options-key-features-wrapper" class="clearfix">
 									<div class="options-badgets-wrapper">
 										<div id="catalog-options" class="clearfix">
-											<div class="catalog-option-title">Color:</div>
-											<ul id="cat-option-ul" class="cat-options">
-												<li class="cat-option-color" onclick="activeColor(this)">
-													<span class="colorpicker" style="background-color:#000000"></span>
-												</li>
-												<li class="cat-option-color selected" onclick="activeColor(this)">
-													<span class="colorpicker selected" style="background-color:#ffffff"></span>
-												</li>
-											</ul>
-											<div class="catalog-option-title">Size:</div>
-											<ul id="cat-option-ul">
-												<li class="cat-option no-selection selected">32gb</li>
-											</ul>
+											
 										</div>
 									</div>
 								</div>
@@ -241,9 +168,13 @@
 									<div id="price-table">
 										<div class="buy-box clearfix">
 											<div id="ib_actions">
-												<form name="AddItemToCart" action="#" method="POST">
-													<input type="hidden" name="qountity" value="1" id="qountitySelect">
-													<input type="hidden" name="listingId" class="setListingId" value="P-mobi-25905366372" id="listingId">
+												<form name="AddItemToCart" action="<%=request.getContextPath()%>/addToCart" method="POST">
+													<input type="hidden" name="id" value="${product.id}" id="id">
+													<input type="hidden" name="name" value="${product.name}" id="name">
+													<input type="hidden" name="price" value="${product.price}" id="price">
+													<input type="hidden" name="finalPrice" value="${product.final_price}" id="finalPrice">
+													<input type="hidden" name="discount" value="${product.discount}" id="discount">
+													<input type="hidden" name="totalCount" value="${product.count}" id="totalCount">
 													<input class="buyimg buy-image" type="submit" name="submit" value="Buy Now">
 												</form>
 											</div>
@@ -290,112 +221,17 @@
 								<div id="productDetails" class="tab-pane active see-less">
 									<div class="description">
 										<div class="catalog-desc">
-											 Samsung brings you the all-new Samsung Galaxy S6 (Black) (32GB) with a never before fusion of glass moulding and metal sculpturing techniques for an exquisitively sharp viewing experience and adaptive display.
-											 <br>
-											 <br>
-											 <strong>Design &amp; Display</strong>
-											 <br>
-											 <br>
-											 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-											 <img src="http://w.vm4.nmv.infypedia.org/img/assets/9edb659750a94d3c3989dc7a52b46d13d11ce924.jpg.999xxx.jpg" alt="" width="432" height="255">
-											 <br>
-											 <br>
-											 The elegant design of the Samsung Galaxy S6 comes with 
-											 <strong>strong frame of aluminum(Al6013)* and reflective 2.5D Gorilla Glass 4</strong>
-											 provides you with a state-of-the-art display experience. It features 
-											 <strong>5.1" Quad HD (2560 x 1440) Super AMOLED display</strong>
-											 with beautiful curves and radiant glass surfaces that reflect a wide spectrum of brilliant colors.
-											 <br>
-											 <br>
-											 <strong>Processor &amp; OS</strong>
-											 <br>
-											 <br>
-											 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-											 <img src="http://w.vm4.nmv.infypedia.org/img/assets/379074fbd93a99a609b012630d1605d9ae09f4d8.jpg.999xxx.jpg" alt="" width="432" height="541">
-											 <br>
-											 <br>
-											 The 
-											 <strong>2.1GHz Quad, 64-bit Octacore Processor</strong>
-											 with
-											 <strong>Android 5.0 (Lollipop)</strong>
-											 Operating System empowers the phone with superfast multimedia functions and seamless multitasking.
-											 <br>
-											 <br>
-											 <strong>Connectivity</strong>
-											 <br>
-											 <br>
-											 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-											 <img src="http://w.vm4.nmv.infypedia.org/img/assets/18b3092294e8c1538e4db77d2453fdc9d52231d5.jpg.999xxx.jpg" alt="" width="201" height="256">
-											 <br>
-											 <br>
-											 Stay in touch with your friends and share multimedia content – images, songs, videos and more via
-											 <strong> Bluetooth, Wifi</strong>
-											 very easily. You can transfer all your important data from PC to phone in simple steps with
-											 <strong>USB 2.0.</strong>
-											 <br>
-											 <br>
-											 <strong>Other Features</strong>
+											 ${product.description}   
 											 <p>
-											 	The phone offers some never-before features like
-											 	<strong> Fast Charging - by charging for just 10 minutes*, you can get 4 hours* of usage,</strong>
-											 	<strong>wireless charging capability</strong>
-											 	- simply pop the Samsung Galaxy S6 onto a Samsung
-											 	<strong>wireless charging pad</strong>
-											 	for a
-											 	<strong>wire-free recharge</strong>
-											 	.
-											 	<br>
-											 	<br>
-											 	<strong>
-											 		Camera
-											 		<br>
-											 		<br>
-											 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-											 		<img src="http://w.vm4.nmv.infypedia.org/img/assets/4138e28d839516a19de7c41414e1c3ab6ba0aeb1.jpg.999xxx.jpg" alt="" width="432" height="255">
-											 		<br>
-											 		<br>
-											 	</strong>
-											 	Never miss a moment with 
-											 	<strong>16MP Real-time HDR/VOIS Rear Camera</strong>
-											 	featuring higher resolution and
-											 	<strong>F1.9 aperture</strong>
-											 	for clearer images. Click unlimited selfies to capture the best in you with
-											 	<strong>
-											 		5MP Real-time HDR Front Camera.
-											 		<br>
-											 		<br>
-											 	</strong>
-											 	<strong>
-											 		Multimedia
-											 		<br>
-											 		<br>
-											 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-											 		<img src="http://w.vm4.nmv.infypedia.org/img/assets/b2d3894b399080c33d4bfa6158580337363da8b3.jpg.999xxx.jpg" alt="" width="432" height="541">
-											 		<br>
-											 		<br>
-											 	</strong>
-											 	Samsung Galaxy S6 supports MP3, M4A, 3GA, AAC, OGG, OGA, WAV, WMA, AMR, AWB, FLAC, MID, MIDI, XMF, MXMF, IMY, RTTTL, RTX, OTA and many other
-											 	<strong>audio and video formats</strong>
-											 	to keep you away from boredom all the day long.
-											 	<br>
-											 	<br>
-											 	<strong>Memory &amp; Battery</strong>
-											 	<br>
-											 	<br>
-											 	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-											 	<img src="http://w.vm4.nmv.infypedia.org/img/assets/dce0ef3cd075a72dc66a00fb63dc0100cfa374af.jpg.999xxx.jpg" alt="" width="201" height="256">
-											 	<br>
-											 	<br>
-											 	Samsung Galaxy S6 is powered with 
-											 	<strong>2550 mAh Battery </strong>
-											 	for long usage. Its 
-											 	<strong>SDRAM Memory of 3GB</strong>
-											 	and
-											 	<strong>Internal User Memory of 32GB/64GB</strong>
-											 	allows hassle free storage of all your favorite movies, songs, images and other content.
-											 	<br>
-											 	<br>  
-											 </p>    
+											 <c:forEach items="${product.features}" var="feature">
+											 	<br/>
+											 	<br/>
+											 	<strong>${feature.key}</strong>
+											 	<br/>
+											 	<br/>
+											 	${feature.value}
+											 </c:forEach>
+											 </p> 
 										</div>
 									</div>
 									<div class="overlay"></div>
@@ -407,197 +243,15 @@
 								</div>
 								<div id="productFeatures" class="tab-pane">
 									<div id="specs">
-										<h3>Size</h3>
 										<div class="features-list">
 											<table width="100%" cellspacing="1" cellpadding="4" border="0">
 												<tbody>
-												<tr class="row">
-													<td valign="top" class="tdcolor1">Dimension (HxWxD)</td>
-													<td class="tdcolor1" style="padding-left:15px;">143.4(H) X 70.5(W) X 6.8(T) mm</td>
-												</tr>
-												<tr class="row">
-													<td valign="top" class="tdcolor2">Weight</td>
-													<td class="tdcolor2" style="padding-left:15px;">138 g</td>
-												</tr>
-												</tbody>
-											</table>
-										</div>
-										<h3>Battery</h3>
-										<div class="features-list">
-											<table width="100%" cellspacing="1" cellpadding="4" border="0">
-												<tbody>
+												<c:forEach items="${product.details}" var="detail">
 													<tr class="row">
-														<td valign="top" class="tdcolor1">Capacity</td>
-														<td class="tdcolor1" style="padding-left:15px;">2550mAh</td>
+														<td valign="top" class="tdcolor1">${detail.key}</td>
+														<td class="tdcolor1" style="padding-left:15px;">${detail.value}</td>
 													</tr>
-											</tbody></table>
-										</div>
-										<h3> Camera </h3>
-										<div class="features-list">
-											<table width="100%" cellspacing="1" cellpadding="4" border="0">
-												<tbody>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">Camera Resolution(Front)</td>
-														<td class="tdcolor1" style="padding-left:15px;">5MP Real-time HDR</td>
-													</tr>
-													<tr class="row">
-														<td valign="top" class="tdcolor2">Camera Resolution(Rear)</td>
-														<td class="tdcolor2" style="padding-left:15px;">16MP Real-time HDR/VOIS</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<h3> Connectivity </h3>
-										<div class="features-list">
-											<table width="100%" cellspacing="1" cellpadding="4" border="0">
-												<tbody>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">Bluetooth</td>
-														<td class="tdcolor1" style="padding-left:15px;">BT v4.1 LE</td>
-													</tr>
-													<tr class="row">
-														<td valign="top" class="tdcolor2">NFC</td>
-														<td class="tdcolor2" style="padding-left:15px;">Yes</td>
-													</tr>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">Others</td>
-														<td class="tdcolor1" style="padding-left:15px;">ANT+</td>
-													</tr>
-													<tr class="row">
-														<td valign="top" class="tdcolor2">USB</td>
-														<td class="tdcolor2" style="padding-left:15px;">USB 2.0</td>
-													</tr>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">WIFI</td>
-														<td class="tdcolor1" style="padding-left:15px;">Wi-Fi 802.11 a/b/g/n/ac (2X2 MIMO)</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<h3> Display </h3>
-										<div class="features-list">
-											<table width="100%" cellspacing="1" cellpadding="4" border="0">
-												<tbody>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">Resolution</td>
-														<td class="tdcolor1" style="padding-left:15px;">2560x1440 , 577ppi</td>
-													</tr>
-													<tr class="row">
-														<td valign="top" class="tdcolor2">Size</td>
-														<td class="tdcolor2" style="padding-left:15px;">12.95 cm (5.1)</td>
-													</tr>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">Technology</td>
-														<td class="tdcolor1" style="padding-left:15px;">Quad HD Super AMOLED</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<h3> Extra Features </h3>
-										<div class="features-list">
-											<table width="100%" cellspacing="1" cellpadding="4" border="0">
-												<tbody>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">Extra Features</td>
-														<td class="tdcolor1" style="padding-left:15px;">Android, Google, Chrome, Drive, Photos, Gmail, Google+, Google Settings, Hangouts, Maps, Play Books, Play Games, Play Newsstand, Play Movie &amp; TV, Play Music, Play Store, Voice Search, YouTube are trademarks of Google Inc.</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<h3> Memory </h3>
-										<div class="features-list">
-											<table width="100%" cellspacing="1" cellpadding="4" border="0">
-												<tbody>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">Internal User Memory</td>
-														<td class="tdcolor1" style="padding-left:15px;">32GB/64GB (Disclaimer - The operating system and default applications occupy part of the internal memory)</td>
-													</tr>
-													<tr class="row">
-														<td valign="top" class="tdcolor2">SDRAM Memory</td>
-														<td class="tdcolor2" style="padding-left:15px;">3GB</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<h3> Music &amp; Sound </h3>
-										<div class="features-list">
-											<table width="100%" cellspacing="1" cellpadding="4" border="0">
-												<tbody>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">Audio Codec</td>
-														<td class="tdcolor1" style="padding-left:15px;">MP3, AMR-NB, AMR-WB, AAC, AAC+, eAAC+, WMA, Vorbis, FLAC, OPUS</td>
-													</tr>
-													<tr class="row">
-														<td valign="top" class="tdcolor2">Audio Format supported</td>
-														<td class="tdcolor2" style="padding-left:15px;">MP3, M4A, 3GA, AAC, OGG, OGA, WAV, WMA, AMR, AWB, FLAC, MID, MIDI, XMF, MXMF, IMY, RTTTL, RTX, OTA</td>
-													</tr>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">Headset Port</td>
-														<td class="tdcolor1" style="padding-left:15px;">2 Mics (Directional Voice Recording)</td>
-													</tr>
-													<tr class="row">
-														<td valign="top" class="tdcolor2">More</td>
-														<td class="tdcolor2" style="padding-left:15px;">Adapt Sound, Sound Alive, Wise Voice 2.0, Extra Volume 2.0</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<h3> Operating System </h3>
-										<div class="features-list">
-											<table width="100%" cellspacing="1" cellpadding="4" border="0">
-												<tbody>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">Operating System</td>
-														<td class="tdcolor1" style="padding-left:15px;">Android 5.0 (Lollipop)</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<h3> Platform </h3>
-										<div class="features-list">
-											<table width="100%" cellspacing="1" cellpadding="4" border="0">
-												<tbody>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">2G Band</td>
-														<td class="tdcolor1" style="padding-left:15px;">GSM/GPRS/EDGE : 850/900/1800/1900 MHz</td>
-													</tr>
-													<tr class="row">
-														<td valign="top" class="tdcolor2">3G Band</td>
-														<td class="tdcolor2" style="padding-left:15px;">HSPA + 42Mbps : 850/900/1900/2100 MHz</td>
-													</tr>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">4G Band</td>
-														<td class="tdcolor1 col-md-7 col-sm-7 col-xs-7" style="padding-left:15px;">LTE Cat.6 300/50Mbps</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<h3> Processor </h3>
-										<div class="features-list">
-											<table width="100%" cellspacing="1" cellpadding="4" border="0">
-												<tbody>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">Speed</td>
-														<td class="tdcolor1" style="padding-left:15px;">2.1GHz Quad, 1.5GHz Quad</td>
-													</tr>
-													<tr class="row">
-														<td valign="top" class="tdcolor2">Type</td>
-														<td class="tdcolor2" style="padding-left:15px;">64-bit Octacore Processor</td>
-													</tr>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">Sensors</td>
-														<td class="tdcolor1" style="padding-left:15px;">Accelerometer, Geo-magnetic, Gyroscope, RGB ambient light, Proximity, Barometer, Hall Sensor, Finger Scanner, Heart Rate Monitor</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-										<h3> Warranty </h3>
-										<div class="features-list">
-											<table width="100%" cellspacing="1" cellpadding="4" border="0">
-												<tbody>
-													<tr class="row">
-														<td valign="top" class="tdcolor1">1 Year Manufacturer Warranty</td>
-													</tr>
+												</c:forEach>
 												</tbody>
 											</table>
 										</div>
@@ -614,11 +268,9 @@
 													<tr>
 														<td>
 															<ul>
-																<li>Mobile</li>
-																<li>Charger</li>
-																<li>Usb Cable</li>
-																<li>Handsfree</li>
-																<li>User Manual</li>
+																<c:forEach items="${product.sales_package}" var="item">
+																	<li>${item}</li>
+																</c:forEach>
 															</ul>
 														</td>
 													</tr>
@@ -627,40 +279,57 @@
 										</div>
 									</div>
 								</div>
-								<div>
-									<div class="sales-package">
-										<h3>Deliverable Locations</h3>
-										<div id="shipping_zones" class="accordion-body">
-											<table border="0" cellspacing="1" cellpadding="4" class="tblcolor" width="100%">
-												<tbody>
+								
+								<c:if test="${not empty cookie.cust_name}">
+									<div id="review-page-container">
+										<div id="middle_writereview" class="write-review">
+											<span class="mainTitle">Write a Review for
+												<span>${product.name}</span>
+											</span>
+										<div style="height:10px;"></div>
+											<f:form modelAttribute="comment" name="postReview" id="postReview" method="POST" action="">
+												<f:hidden path="author" value="${cookie.cust_name.value}"/>
+												<table width="100%" id="standardad">
+													<tbody>
 													<tr>
-														<td class="tdcolor1">This product ships to <span style="color:#000;"><i>India</i>.</span></td>
+														<td valign="top">
+															<div id="review-rating">
+																<span class="form-rating-title">Rating : </span>
+																	<img id="star1" class="star1" src="/images/stargray.gif" alt="" width="13" height="12" border="0" align="absmiddle" onmouseover="changeRateImage(1,1);" onmouseout="changeRateImage(0,1);setoldrating();" onclick="showSDPRatingReview_setRating(1);">
+																	<img id="star2" class="star2" src="/images/stargray.gif" alt="" width="13" height="12" border="0" align="absmiddle" onmouseover="changeRateImage(1,2);" onmouseout="changeRateImage(0,2);setoldrating();" onclick="showSDPRatingReview_setRating(2);">
+																	<img id="star3" class="star3" src="/images/stargray.gif" alt="" width="13" height="12" border="0" align="absmiddle" onmouseover="changeRateImage(1,3);" onmouseout="changeRateImage(0,3);setoldrating();" onclick="showSDPRatingReview_setRating(3);">
+																	<img id="star4" class="star4" src="/images/stargray.gif" alt="" width="13" height="12" border="0" align="absmiddle" onmouseover="changeRateImage(1,4);" onmouseout="changeRateImage(0,4);setoldrating();" onclick="showSDPRatingReview_setRating(4);">
+																	<img id="star5" class="star5" src="/images/stargray.gif" alt="" width="13" height="12" border="0" align="absmiddle" onmouseover="changeRateImage(1,5);" onmouseout="changeRateImage(0,5);setoldrating();" onclick="showSDPRatingReview_setRating(5);">
+															</div>
+														</td>
 													</tr>
 													<tr>
-														<td class="tdcolor1">Free Shipping to <span style="color:#000;"><i>India</i>.</span></td>
-													</tr>					
+														<td>
+															<div class="review-title-and-text">Review Title <span class="review-restrictions">(Limit 50 Characters)</span> </div><br>
+															<f:input path="title" id="message_title" name="messageTitle" maxlength="50" value=""/>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<div class="review-title-and-text">Review Text <span class="review-restrictions"> (Limit 50 to 2000 Characters)</span>
+																<f:textarea path="text" cols="30" rows="3" id="message" name="message" maxlength="2000"></f:textarea>
+																<span style="float:right;height:20px;">
+																	<span class="remaining-characters-info" style="color: rgb(187, 187, 187);">Remaining characters: <span class="remaining-characters">2000</span></span><br>
+																</span>
+															</div>
+														</td>
+													</tr>
+													<tr>
+														<td>
+															<input id="submit" type="submit" name="Submit" value="">
+														</td>
+													</tr>
 												</tbody>
 											</table>
+										</f:form>
 										</div>
 									</div>
-								</div>
-								<div>
-									<div class="sales-package">
-										<h3> Disclaimer </h3>
-										<div class="features-list">
-											<table width="100%" cellspacing="1" cellpadding="4" border="0">
-												<tbody>
-													<tr>
-														<td width="250px;" valign="top" class="tdcolor1">Product will be delivered for all urban areas serviceable by major courier agencies. For remote/rural areas the product will be sent by local couriers / Indian Speed Post and may take little more time.</td>
-													</tr>
-													<tr>
-														<td width="250px;" valign="top" class="tdcolor2">No Deliveries on Sunday and National Holidays.</td>
-													</tr>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
+								</c:if>
 							</div>
 						</div>
 						<div id="reviews-detail">
@@ -680,20 +349,22 @@
 									</span>
 								</div>
 							</div>
-							<div class="review">
-								<span class="reviewtitle">Good Sound Quality</span>
-								<span class="rating-star">
-									<img src="/images/starred.gif" alt="Rating of 5 out of 5" width="13" height="12" border="0" align="absmiddle">
-									<img src="/images/starred.gif" alt="Rating of 5 out of 5" width="13" height="12" border="0" align="absmiddle">
-									<img src="/images/starred.gif" alt="Rating of 5 out of 5" width="13" height="12" border="0" align="absmiddle">
-									<img src="/images/starred.gif" alt="Rating of 5 out of 5" width="13" height="12" border="0" align="absmiddle">
-									<img src="/images/starred.gif" alt="Rating of 5 out of 5" width="13" height="12" border="0" align="absmiddle">
-								</span>
-								<br>By <b>Harina</b>,
-								<span class="easy-date" title="2015-04-06 17:17:51.0">3 weeks ago</span>
-								<br>
-								<p class="review-text">This mobile has really got some powerful Speakers equipped with Cirrus Logic Wolfsan Stereo. Loved it.</p>
-							</div>
+							<c:forEach items="${product.comments}" var="comment">
+								<div class="review">
+									<span class="reviewtitle">${comment.title}</span>
+									<span class="rating-star">
+										<img src="/images/starred.gif" alt="Rating of 5 out of 5" width="13" height="12" border="0" align="absmiddle">
+										<img src="/images/starred.gif" alt="Rating of 5 out of 5" width="13" height="12" border="0" align="absmiddle">
+										<img src="/images/starred.gif" alt="Rating of 5 out of 5" width="13" height="12" border="0" align="absmiddle">
+										<img src="/images/starred.gif" alt="Rating of 5 out of 5" width="13" height="12" border="0" align="absmiddle">
+										<img src="/images/starred.gif" alt="Rating of 5 out of 5" width="13" height="12" border="0" align="absmiddle">
+									</span>
+									<br>By <b>${comment.author}</b>,
+									<span class="easy-date">${comment.date}</span>
+									<br>
+									<p class="review-text">${comment.text}</p>
+								</div>
+							</c:forEach>
 						</div>
 					</div>
 					<div id="side-outer-warp" class="right">

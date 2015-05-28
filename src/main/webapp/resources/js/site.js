@@ -592,6 +592,71 @@ $(document).ready(function() {
 	var search = $("#search");
 	select.change(function() {
 		var selected = $("#select option:selected").text();
-		search.attr("action", "/mongo/"+selected+"/search");
+		search.attr("action", "/mongo/"+selected);
 	});
 });
+
+$(document).ready(function() {
+	var relevance = $("#relevance");
+	var asc = $("#asc");
+	var desc = $("#desc");
+	relevance.click(function() {
+		var url;
+		var parameters = parseQueryString(location.href.split('?')[1]);
+		if ("sort" in parameters) {
+			parameters["sort"] = "relevance";
+			url = parseToQueryString(parameters);
+		} else {
+			url = location.href + "&sort=relevance"
+		}
+		relevance.attr("href", url);
+	});
+	asc.click(function() {
+		var url;
+		var parameters = parseQueryString(location.href.split('?')[1]);
+		if ("sort" in parameters) {
+			parameters["sort"] = "asc";
+			url = parseToQueryString(parameters);
+		} else {
+			url = location.href + "&sort=asc"
+		}
+		asc.attr("href", url);
+	});
+	desc.click(function() {
+		var url;
+		var parameters = parseQueryString(location.href.split('?')[1]);
+		if ("sort" in parameters) {
+			parameters["sort"] = "desc";
+			url = parseToQueryString(parameters);
+		} else {
+			url = location.href + "&sort=desc"
+		}
+		desc.attr("href", url);
+	});
+});
+
+var parseQueryString = function (strQuery) {
+    var i,
+        tmp     = [],
+        tmp2    = [],
+        objRes   = {};
+    if (strQuery != '') {
+        tmp = (strQuery.substr(0)).split('&');
+        for (i = 0; i < tmp.length; i += 1) {
+            tmp2 = tmp[i].split('=');
+            if (tmp2[0]) {
+                objRes[tmp2[0]] = tmp2[1];
+            }
+        }
+    }
+    return objRes;
+};
+
+var parseToQueryString = function (objRes) {
+	var string = location.href.split('?')[0] + '?';
+	for (var val in objRes) {
+		string += val + "=" + objRes[val] + "&";
+	}
+	string = string.substr(0, string.length-1);
+	return string;
+};

@@ -28,14 +28,19 @@
 		</div>
 		<div class="search">
 			<c:if test="${empty currentCategory}">
-				<form id="search" name=search action="<%=request.getContextPath()%>/All stores/search" method="get">
+				<form id="search" name=search action="<%=request.getContextPath()%>/All stores" method="get">
 			</c:if>
 			<c:if test="${not empty currentCategory}">
-				<form id="search" name=search action="<%=request.getContextPath()%>/${currentCategory}/search" method="get">
+				<form id="search" name=search action="<%=request.getContextPath()%>/${currentCategory}" method="get">
 			</c:if>
 				<div class="search-bar">
 					<div id="inner-search">
-						<input name="query" type="text" class="input-search" placeholder="Search from millions of products" />
+						<c:if test="${empty search_term}">
+							<input name="query" type="text" class="input-search" placeholder="Search from millions of products" />
+						</c:if>
+						<c:if test="${not empty search_term}">
+							<input name="query" type="text" class="input-search" value="${search_term}" />
+						</c:if>
 						<select id="select">
 							<option value="All" selected="selected">All Stores</option>
 							<c:forEach items="${categories}" var="category">

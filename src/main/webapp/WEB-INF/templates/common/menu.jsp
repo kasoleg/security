@@ -31,7 +31,7 @@
 														<ul>
 															<c:forEach items="${menuLink}" var="link">
 																<li>
-																	<a class="trackMenu" href="<%=request.getContextPath()%>/${category}/${link}">${link}</a>
+																	<a class="trackMenu" href="<%=request.getContextPath()%>/${category}/?${links[vs.index].links[vs2.index]}=${link}">${link}</a>
 																</li>
 															</c:forEach>
 														</ul>
@@ -51,7 +51,7 @@
 														<ul>
 															<c:forEach items="${menuLinkAccessories}" var="linkAccessory">
 																<li>
-																	<a class="trackMenu" href="<%=request.getContextPath()%>/${category}/${linkAccessory}">${linkAccessory}</a>
+																	<a class="trackMenu" href="<%=request.getContextPath()%>/${category}?accessory=${linkAccessory}">${linkAccessory}</a>
 																</li>
 															</c:forEach>
 														</ul>

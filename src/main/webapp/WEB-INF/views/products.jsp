@@ -1,13 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib uri="http://tiles.apache.org/tags-tiles" prefix="tiles" %>
 	<div id="search">
 		<div id="search-container" class="row">
 			<div>
 				<div class="facetss">
 					<div class="facet-container">
-						<form class="filter-sec facets search filters" action="search" method="post">
+						<form class="filter-sec facets search filters" action="" method="get">
 							<p class="show-all">
 								<a href="#">Show All Products</a>
 							</p>
@@ -39,7 +38,7 @@
 											<c:if test="${currentCategory == category}">
 												<c:forEach items="${accessories[vs.index]}" var="accessory" varStatus="vs2">
 													<p class="level-2">
-														<a href="<%=request.getContextPath()%>/${category}/${accessory}">
+														<a href="<%=request.getContextPath()%>/${category}/?accessory=${accessory}">
 															<span class="width2">${accessory}</span>
 															<span class="count">(${countAccessoriesByCategories.get(category).get(accessory)})</span>
 														</a>
@@ -50,28 +49,61 @@
 									</ul>
 								</div>
 							</div>
-							<c:if test="${not empty brands}">
-								<div class="MS-or-facet">
-									<h4 class="facet-title" onclick="facetToggle(this, 'make')">
-										Brand
-										<span class="plus"></span>
-									</h4>
-									<div id="make_facet_panel" class="facet_panel">
-										<div class="facet-input-search">
-											<input id="make_serach" type="text" placeholder="Search Brand">
-											<span class="facet-search-icon glyphicon glyphicon-search"></span>
-										</div>
-										<div id="make-input-control" class="input-control contentHolder always-visible ps-container ps-active-y">
-											<c:forEach items="${brands}" var="brand">
-												<div class="content nav enabled unselected noajax">
-													<input class="nav checkbox" type="checkbox">
-													<a href="${currentCategory}/${brand}">${brand}</a>
-												</div>
-											</c:forEach>
-										</div>
+							<div class="MS-or-facet">
+								<h4 class="facet-title" onclick="facetToggle(this, 'Brand')">
+									Brand
+									<span class="plus"></span>
+								</h4>
+								<div id="Brand_facet_panel" class="facet_panel">
+									<div class="facet-input-search">
+										<input id="Brand_search" type="text" placeholder="Search Brand">
+										<span class="facet-search-icon glyphicon glyphicon-search"></span>
+									</div>
+									<div id="Brand-input-control" class="input-control contentHolder always-visible ps-container ps-active-y">
+										<c:forEach items="${brands}" var="brand">
+											<div class="content nav enabled unselected noajax">
+												<c:if test="${not empty options.get(option)}">
+													<input name="Brand" value="${brand}" checked class="nav checkbox" type="checkbox">
+												</c:if>
+												<c:if test="${empty options.get(option)}">
+													<input name="Brand" value="${brand}" class="nav checkbox" type="checkbox">
+												</c:if>
+												<a href="<%=request.getContextPath()%>/${currentCategory}?Brand=${brand}">${brand}</a>
+											</div>
+										</c:forEach>
 									</div>
 								</div>
+							</div>
+							<c:if test="${not empty details}">
+								<c:forEach items="${details}" var="detail">
+									<c:if test="${detail.key != 'Brand'}">
+										<div class="MS-or-facet">
+											<h4 class="facet-title" onclick="facetToggle(this, '${detail.key}')">
+												${detail.key}
+												<span class="plus"></span>
+											</h4>
+											<div id="${detail.key}_facet_panel" class="facet_panel">
+												<div id="${detail.key}-input-control" class="input-control contentHolder always-visible ps-container ps-active-y">
+													<c:forEach items="${detail.value}" var="option">
+														<div class="content nav enabled unselected noajax">
+															<c:if test="${not empty options.get(option)}">
+																<input name="${detail.key}" value="${option}" checked class="nav checkbox" type="checkbox">
+															</c:if>
+															<c:if test="${empty options.get(option)}">
+																<input name="${detail.key}" value="${option}" class="nav checkbox" type="checkbox">
+															</c:if>
+															<a href="<%=request.getContextPath()%>/${currentCategory}?${detail.key}=${option}">${option}</a>
+														</div>
+													</c:forEach>
+												</div>
+											</div>
+										</div>
+									</c:if>
+								</c:forEach>
 							</c:if>
+							<p class="show-all">
+								<input type="submit" value="Show" />
+							</p>
 						</form>
 					</div>
 				</div>
@@ -93,44 +125,35 @@
 								<span>Sort By</span>
 								<c:if test="${active == 'asc'}">
 									<li onclick="activeLi(this)">
-										<input name="sort" value="relevance" type="radio" checked="" style="display:none">
-										<a href="<%=request.getContextPath()%>/${currentCategory}/search?sort=relevance">Best Match</a>
+										<a id="relevance" href="<%=request.getContextPath()%>/${currentCategory}?sort=relevance">Best Match</a>
 									</li>
 									<li class="active" onclick="activeLi(this)">
-										<input name="sort" value="asc" type="radio" style="display:none">
-										<a href="#sort=asc">Low Price</a>
+										<a id="asc" href="<%=request.getContextPath()%>/${currentCategory}?sort=asc">Low Price</a>
 									</li>
 									<li onclick="activeLi(this)">
-										<input name="sort" value="desc" type="radio" style="display:none">
-										<a href="<%=request.getContextPath()%>/${currentCategory}/search?sort=desc">High Price</a>
+										<a id="desc" href="<%=request.getContextPath()%>/${currentCategory}?sort=desc">High Price</a>
 									</li>
 								</c:if>
 								<c:if test="${active == 'desc'}">
 									<li onclick="activeLi(this)">
-										<input name="sort" value="relevance" type="radio" checked="" style="display:none">
-										<a href="<%=request.getContextPath()%>/${currentCategory}/search?sort=relevance">Best Match</a>
+										<a id="relevance" href="<%=request.getContextPath()%>/${currentCategory}?sort=relevance">Best Match</a>
 									</li>
 									<li onclick="activeLi(this)">
-										<input name="sort" value="asc" type="radio" style="display:none">
-										<a href="<%=request.getContextPath()%>/${currentCategory}/search?sort=asc">Low Price</a>
+										<a id="asc" href="<%=request.getContextPath()%>/${currentCategory}?sort=asc">Low Price</a>
 									</li>
 									<li class="active" onclick="activeLi(this)">
-										<input name="sort" value="desc" type="radio" style="display:none">
-										<a href="#sort=desc">High Price</a>
+										<a id="desc" href="<%=request.getContextPath()%>/${currentCategory}?sort=desc">High Price</a>
 									</li>
 								</c:if>
 								<c:if test="${empty active}">
 									<li class="active" onclick="activeLi(this)">
-										<input name="sort" value="relevance" type="radio" checked="" style="display:none">
-										<a href="<%=request.getContextPath()%>/${currentCategory}/search?sort=relevance">Best Match</a>
+										<a id="relevance" href="<%=request.getContextPath()%>/${currentCategory}?sort=relevance">Best Match</a>
 									</li>
 									<li onclick="activeLi(this)">
-										<input name="sort" value="asc" type="radio" style="display:none">
-										<a href="#&sort=asc">Low Price</a>
+										<a id="asc" href="<%=request.getContextPath()%>/${currentCategory}?sort=asc">Low Price</a>
 									</li>
 									<li onclick="activeLi(this)">
-										<input name="sort" value="desc" type="radio" style="display:none">
-										<a href="<%=request.getContextPath()%>/${currentCategory}/search?sort=desc">High Price</a>
+										<a id="desc" href="<%=request.getContextPath()%>/${currentCategory}?sort=desc">High Price</a>
 									</li>
 								</c:if>
 							</ul>

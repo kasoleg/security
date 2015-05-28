@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.digester.WithDefaultsRulesWrapper;
 import org.bson.types.BasicBSONList;
+import org.security.mongo.entities.Comment;
 import org.security.mongo.entities.Menu;
 import org.security.mongo.entities.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.TextCriteria;
 import org.springframework.data.mongodb.core.query.TextQuery;
+import org.springframework.data.mongodb.core.query.Update;
 
 import com.mongodb.BasicDBList;
 import com.mongodb.BasicDBObject;
@@ -56,12 +58,12 @@ public class IProductImpl implements IProduct {
 	public List<String> listCategories() {
 		BasicDBObject dbObject = new BasicDBObject();
 		dbObject.append("subCategory", "1");
-		return mongoOperations.getCollection("products").distinct("details.Category", dbObject);
+		return mongoOperations.getCollection("products").distinct("category", dbObject);
 	}
 
 	@Override
 	public List<Product> listProductsByCategory(String category) {
-		return mongoOperations.find(Query.query(Criteria.where("details.Category").is(category)), Product.class);
+		return mongoOperations.find(Query.query(Criteria.where("category").is(category)), Product.class);
 	}
 
 	//@Override
@@ -93,7 +95,7 @@ public class IProductImpl implements IProduct {
 		
 		for (String category : categories) {
 			Menu menu = mongoOperations.findOne(Query.query(Criteria.where("category").is(category)), Menu.class);
-			dbObject.append("details.Category", category);
+			dbObject.append("category", category);
 			ArrayList<List<String>> menuLinks = new ArrayList<List<String>>();
 			for (String menuLink : menu.getLinks()) {
 				List<String> details = (ArrayList) mongoOperations.getCollection("products").distinct("details."+menuLink, dbObject);
@@ -133,7 +135,7 @@ public class IProductImpl implements IProduct {
 		
 		for (String category : categories) {
 			dbObject.append("subCategory", category);
-			List<String> subCategories = mongoOperations.getCollection("products").distinct("details.Category", dbObject);
+			List<String> subCategories = mongoOperations.getCollection("products").distinct("category", dbObject);
 			accessories.add(subCategories);
 		}
 		
@@ -145,7 +147,7 @@ public class IProductImpl implements IProduct {
 		ArrayList<Long> counts = new ArrayList<Long>();
 		List<String> categories = listCategories();
 		for (String category : categories) {
-			counts.add(mongoOperations.count(Query.query(Criteria.where("details.Category").is(category)), Product.class));
+			counts.add(mongoOperations.count(Query.query(Criteria.where("category").is(category)), Product.class));
 		}
 		return counts;
 	}
@@ -159,7 +161,7 @@ public class IProductImpl implements IProduct {
 		for (String subCategory : subCategories) {
 			countByAccessory = new HashMap<String, Long>();
 			for (String accessory : accessories) {
-				Long count = mongoOperations.count(Query.query(Criteria.where("details.Category").is(accessory).and("subCategory").is(subCategory)), Product.class);
+				Long count = mongoOperations.count(Query.query(Criteria.where("category").is(accessory).and("subCategory").is(subCategory)), Product.class);
 				countByAccessory.put(accessory, count);
 			}
 			countsByCategory.put(subCategory, countByAccessory);
@@ -173,7 +175,7 @@ public class IProductImpl implements IProduct {
 		BasicDBObject ne = new BasicDBObject();
 		ne.append("$ne", "1");
 		dbObject.append("subCategory", ne);
-		return mongoOperations.getCollection("products").distinct("details.Category", dbObject);
+		return mongoOperations.getCollection("products").distinct("category", dbObject);
 	}
 
 	@Override
@@ -186,17 +188,36 @@ public class IProductImpl implements IProduct {
 	}
 
 	@Override
-	public List<Product> search(String category, String name, String sort) {
+	public List<Product> search(String category, String accessory, String name, String sort, Map<String, String[]> details) {
 		Query query = new Query();
 		if (name != null) {
 			TextCriteria criteria = TextCriteria.forDefaultLanguage().matchingAny("name", name);
 			query.addCriteria(criteria);
 		}
-			
+		
+		List<Criteria> criterias = new ArrayList<Criteria>();
+		for (String key : details.keySet()) {
+			if (key.equals("name") || key.equals("sort") || key.equals("query")) {} else {
+				String[] values = details.get(key);
+				for (String value : values) {
+					criterias.add(Criteria.where("details."+key).is(value));
+				}
+			}
+		}
+		if (criterias.size() != 0)
+			query.addCriteria(new Criteria().orOperator(criterias.toArray(new Criteria[criterias.size()])));
+		
 		Sort asc = new Sort(Sort.Direction.ASC, "final_price");
 		Sort desc = new Sort(Sort.Direction.DESC, "final_price");
-		if (!category.equals("All stores"))
-			query.addCriteria(Criteria.where("details.Category").is(category));
+		
+		if (!category.equals("All stores") && accessory == null) {
+			query.addCriteria(Criteria.where("category").is(category));
+		} else {
+			if (!category.equals("All stores")) {
+				query.addCriteria(Criteria.where("subCategory").is(category));
+				query.addCriteria(Criteria.where("category").is(accessory));
+			}
+		}
 		if (sort.equals("asc")) {
 			query.with(asc);
 		} else if (sort.equals("desc")) {
@@ -208,6 +229,32 @@ public class IProductImpl implements IProduct {
 
 	@Override
 	public List<String> listBrandsByCategory(String category) {
-		return mongoOperations.getCollection("products").distinct("details.Brand", new BasicDBObject("details.Category", category));
+		return mongoOperations.getCollection("products").distinct("details.Brand", new BasicDBObject("category", category));
+	}
+
+	@Override
+	public Map<String, List<String>> listDetailsByCategory(String category) {
+		Map<String, List<String>> detailsByCategory = new HashMap<String, List<String>>();
+		Product product = mongoOperations.findOne(Query.query(Criteria.where("category").is(category)), Product.class);
+		Map<String, String> details = product.getDetails();
+		BasicDBObject dbObject = new BasicDBObject();
+		dbObject.append("category", category);
+		for (String detail : details.keySet()) {
+			detailsByCategory.put(detail, mongoOperations.getCollection("products").distinct("details."+detail, dbObject));
+		}
+		return detailsByCategory;
+	}
+
+	@Override
+	public List<String> listSeriesByCategory(String category) {
+		return mongoOperations.getCollection("products").distinct("details.Series", new BasicDBObject("category", category));
+	}
+
+	@Override
+	public void addComment(String name, Comment comment) {
+		mongoOperations.upsert(Query.query(Criteria.where("name").is(name)), 
+				new Update().push("comments", comment)
+					.inc("comment_count", 1), 
+				Product.class);
 	}
 }

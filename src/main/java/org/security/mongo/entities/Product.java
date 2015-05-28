@@ -14,15 +14,57 @@ import com.mongodb.BasicDBList;
 public class Product {
 	@Id
 	private String id;
-	String name;
-	String product_img;
-	String subCategory;
-	Integer price;
-	Integer final_price;
-	Integer discount;
-	String description;
-	Integer count;
-	Map<String, String> details;
+	private String name;
+	private String product_img;
+	private String subCategory;
+	private Integer price;
+	private Integer final_price;
+	private Integer discount;
+	private String description;
+	private Integer count;
+	private Map<String, String> details;
+	private List<String> images;
+	private List<String> thumbnails;
+	private Map<String, String> features;
+	private List<String> sales_package;
+	private List<Comment> comments;
+	private Integer comment_count;
+	public Integer getComment_count() {
+		return comment_count;
+	}
+	public void setComment_count(Integer comment_count) {
+		this.comment_count = comment_count;
+	}
+	public List<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
+	public List<String> getSales_package() {
+		return sales_package;
+	}
+	public void setSales_package(List<String> sales_package) {
+		this.sales_package = sales_package;
+	}
+	public Map<String, String> getFeatures() {
+		return features;
+	}
+	public void setFeatures(Map<String, String> features) {
+		this.features = features;
+	}
+	public List<String> getImages() {
+		return images;
+	}
+	public void setImages(List<String> images) {
+		this.images = images;
+	}
+	public List<String> getThumbnails() {
+		return thumbnails;
+	}
+	public void setThumbnails(List<String> thumbnails) {
+		this.thumbnails = thumbnails;
+	}
 	public String getId() {
 		return id;
 	}

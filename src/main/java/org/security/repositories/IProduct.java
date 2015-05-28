@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.security.mongo.entities.Comment;
 import org.security.mongo.entities.Menu;
 import org.security.mongo.entities.Product;
 
@@ -27,6 +28,9 @@ public interface IProduct {
 	List<Long> countOfProductsByCategory();
 	Map<String, Map<String, Long>> countOfAccessoriesByCategory();
 	List<String> listSubCategories();
-	List<Product> search(String category, String name, String sort);
+	List<Product> search(String category, String accessory, String name, String sort, Map<String, String[]> details);
 	List<String> listBrandsByCategory(String category);
+	Map<String, List<String>> listDetailsByCategory(String category);
+	List<String> listSeriesByCategory(String category);
+	void addComment(String name, Comment comment);
 }
